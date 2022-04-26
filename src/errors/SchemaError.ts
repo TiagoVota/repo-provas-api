@@ -6,7 +6,6 @@ class SchemaError extends UnprocessableEntityError {
 		super(message)
 		this.name = 'SchemaError'
 		this.message = message
-		this.status = 422
 	}
 }
 
