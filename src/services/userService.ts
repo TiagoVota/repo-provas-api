@@ -9,6 +9,10 @@ import { ExistentUserError, InvalidPasswordError } from '../errors/index.js'
 
 
 export type UserData = Omit<User, 'id'>
+export interface UserInfo {
+	userId: number
+	email: string
+}
 
 const createUser = async ({ email, password }: UserData) => {
 	await validateExistentUser(email)
