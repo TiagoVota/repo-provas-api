@@ -7,7 +7,7 @@ import authRouter from './authRouter.js'
 const router = Router()
 
 router.use('/health', healthRouter)
-router.use('/cards', authRouter)
+router.use('/auth', authRouter)
 
 
 export default router

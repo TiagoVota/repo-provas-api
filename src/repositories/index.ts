@@ -1,6 +1,6 @@
-// import * as userRepository from './userRepository.js'
+import * as userRepository from './userRepository.js'
 
 
-// export {
-// 	userRepository,
-// }
+export {
+	userRepository,
+}
