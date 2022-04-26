@@ -20,7 +20,5 @@ authRouter.post(
 	authController.signUpUser
 )
 
-authRouter.delete('/logout', authController.logoutUser)
-
 
 export default authRouter

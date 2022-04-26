@@ -31,22 +31,7 @@ const loginUser = async (req: Request, res: Response, next: NextFunction) => {
 }
 
 
-const logoutUser = async (req: Request, res: Response, next: NextFunction) => {
-	const userData = req.body
-
-	try {
-		const deletedUser = await userService.deleteUser(userData)
-
-		return res.status(200).send(deletedUser)
-
-	} catch (error) {
-		next(error)
-	}
-}
-
-
 export {
 	signUpUser,
 	loginUser,
-	logoutUser,
 }

@@ -32,11 +32,6 @@ const AuthorizeUser = async ({ email, password }: UserData) => {
 }
 
 
-const deleteUser = async (data) => {
-	return {}
-}
-
-
 const validateExistentUser = async (email: string) => {
 	const existentUserEmail = await userRepository.findByEmail(email)
 	if (existentUserEmail) throw new ExistentUserError(email)
@@ -59,5 +54,4 @@ const validatePassword = (password: string, hashPassword: string) => {
 export {
 	createUser,
 	AuthorizeUser,
-	deleteUser,
 }
