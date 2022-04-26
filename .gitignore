@@ -26,9 +26,6 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Functionalities not included
-authMiddleware.ts
-
 # Remove all examples files from git from boilerplate 
 example*
 Example*
