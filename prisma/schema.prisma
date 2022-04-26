@@ -1,0 +1,79 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Category {
+  id    Int          @id(map: "categories_pk") @default(autoincrement())
+  name  CategoryName
+  tests Test[]
+
+  @@map("categories")
+}
+
+model Discipline {
+  id                  Int                   @id(map: "disciplines_pk") @default(autoincrement())
+  name                String                @unique
+  termId              Int
+  terms               Term                  @relation(fields: [termId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "disciplines_fk0")
+  teachersDisciplines teachersDisciplines[]
+
+  @@map("disciplines")
+}
+
+model Teacher {
+  id                  Int                   @id(map: "teachers_pk") @default(autoincrement())
+  name                String                @unique
+  teachersDisciplines teachersDisciplines[]
+
+  @@map("teachers")
+}
+
+model teachersDisciplines {
+  id           Int        @id(map: "teachersDisciplines_pk") @default(autoincrement())
+  teacherId    Int
+  disciplineId Int
+  disciplines  Discipline @relation(fields: [disciplineId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "teachersDisciplines_fk1")
+  teachers     Teacher    @relation(fields: [teacherId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "teachersDisciplines_fk0")
+  tests        Test[]
+}
+
+model Term {
+  id          Int          @id(map: "terms_pk") @default(autoincrement())
+  number      Int          @unique
+  disciplines Discipline[]
+
+  @@map("terms")
+}
+
+model Test {
+  id                  Int                 @id(map: "tests_pk") @default(autoincrement())
+  name                String
+  pdfUrl              String
+  categoryId          Int
+  teacherDisciplineId Int
+  categories          Category            @relation(fields: [categoryId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "tests_fk0")
+  teachersDisciplines teachersDisciplines @relation(fields: [teacherDisciplineId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "tests_fk1")
+
+  @@map("tests")
+}
+
+model User {
+  id       Int    @id(map: "users_pk") @default(autoincrement())
+  email    String @unique
+  password String
+
+  @@map("users")
+}
+
+enum CategoryName {
+  P1
+  P2
+  P3
+  P2ch
+  Outras
+}
