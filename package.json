@@ -9,13 +9,16 @@
     "start:dev": "node ./src/server.ts",
     "start:watch": "npx nodemon ./src/server.ts",
     "start:prod": "NODE_ENV=production node ./src/server.ts",
-    "git:update": "git add . && git status"
+    "git:update": "git add . && git status",
+    "prisma:view-db": "npx prisma studio",
+    "prisma:format": "npx prisma format",
+    "prisma:migrate": "npx prisma migrate dev"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@prisma/client": "^3.12.0",
+    "@prisma/client": "^3.13.0",
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "dotenv": "^16.0.0",
@@ -23,8 +26,7 @@
     "joi": "^17.6.0",
     "jsonwebtoken": "^8.5.1",
     "pg": "^8.7.3",
-    "string-strip-html": "^9.1.11",
-    "uuid": "^8.3.2"
+    "string-strip-html": "^9.1.11"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
@@ -37,7 +39,7 @@
     "eslint": "^8.14.0",
     "husky": "^7.0.4",
     "nodemon": "^2.0.15",
-    "prisma": "^3.12.0",
+    "prisma": "^3.13.0",
     "ts-node": "^10.7.0",
     "typescript": "^4.6.3"
   }
