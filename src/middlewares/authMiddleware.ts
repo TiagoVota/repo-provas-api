@@ -19,13 +19,14 @@ const authMiddleware = async (
 		if (!token) throw new AuthError()
 
 		const user = verifyToken(token) as UserInfo
-		if (!token) throw new AuthError()
+		if (!user) throw new AuthError()
 	
 		res.locals.user = user
 
 		next()
 
 	} catch (error) {
+		next(error)
 		throw new AuthError()
 	}
 }
