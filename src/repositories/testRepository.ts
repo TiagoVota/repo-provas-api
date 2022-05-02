@@ -5,6 +5,12 @@ const findByTerms = async (search: string) => {
 	const testsByTerms = await prisma.term.findMany({
 		include: {
 			disciplines: {
+				where: {
+					name: {
+						contains: search,
+						mode: 'insensitive',
+					},
+				},
 				include: {
 					teacherDisciplines: {
 						include: {
