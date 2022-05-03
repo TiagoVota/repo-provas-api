@@ -10,6 +10,7 @@
     "start:watch": "npx nodemon ./src/server.ts",
     "start:prod": "NODE_ENV=production node ./src/server.ts",
     "test": "dotenv -e .env.test prisma db seed && NODE_OPTIONS=--experimental-vm-modules dotenv -e .env.test jest -i",
+		"test:watch": "dotenv -e .env.test nodemon src/server.ts",
     "git:update": "git add . && git status",
     "prisma:view-db": "npx prisma studio",
     "prisma:format": "npx prisma format",

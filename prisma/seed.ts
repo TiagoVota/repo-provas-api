@@ -10,7 +10,7 @@ const main = async () => {
 		'terms',
 		'disciplines',
 		'teachers',
-		'teacherDisciplines',
+		'"teacherDisciplines"',
 		'categories',
 		'tests',
 	]
@@ -114,8 +114,8 @@ const main = async () => {
 
 
 main()
-	.catch((e) => {
-		console.log(e)
+	.catch((error) => {
+		console.log(error)
 		process.exit(1)
 	})
 	.finally(async () => {

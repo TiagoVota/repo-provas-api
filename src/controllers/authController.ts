@@ -23,7 +23,7 @@ const loginUser = async (req: Request, res: Response, next: NextFunction) => {
 	try {
 		const token = await userService.AuthorizeUser(userData)
 
-		return res.status(200).send(token)
+		return res.status(201).send(token)
 
 	} catch (error) {
 		next(error)
