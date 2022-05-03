@@ -27,7 +27,6 @@ const authMiddleware = async (
 
 	} catch (error) {
 		next(error)
-		throw new AuthError()
 	}
 }
 
