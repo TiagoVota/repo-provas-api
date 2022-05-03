@@ -12,6 +12,31 @@ const findTeacherDisciplineById = async (id: number) => {
 }
 
 
+const findDisciplinesAndTeachers = async () => {
+	const disciplinesAndTeachers = await prisma.discipline.findMany({
+		where: {
+			teacherDisciplines: {
+				some: {
+					id: {
+						gt: 1,
+					},
+				},
+			},
+		},
+		include: {
+			teacherDisciplines: {
+				include: {
+					teacher: true,
+				},
+			},
+		},
+	})
+
+	return disciplinesAndTeachers
+}
+
+
 export {
 	findTeacherDisciplineById,
+	findDisciplinesAndTeachers,
 }

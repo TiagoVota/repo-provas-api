@@ -41,6 +41,22 @@ const getTeacherTests = async (
 }
 
 
+const getTestInsertInfo = async (
+	req: Request,
+	res: Response,
+	next: NextFunction
+) => {
+	try {
+		const testInsertInfo = await testService.getInsertInfo()
+
+		return res.status(200).send(testInsertInfo)
+
+	} catch (error) {
+		next(error)
+	}
+}
+
+
 const postTest = async (
 	req: Request,
 	res: Response,
@@ -80,6 +96,7 @@ const AddView = async (
 export {
 	getDisciplineTests,
 	getTeacherTests,
+	getTestInsertInfo,
 	postTest,
 	AddView,
 }

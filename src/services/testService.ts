@@ -8,6 +8,7 @@ import {
 
 import sanitizeDisciplineTests from '../helpers/testsHelper/sanitizeDisciplineTests.js'
 import sanitizeTeachersTests from '../helpers/testsHelper/sanitizeTeachersTests.js'
+import sanitizeDisciplinesTeachers from '../helpers/testsHelper/sanitizeDisciplinesTeachers.js'
 
 import {
 	NoCategoryError,
@@ -31,6 +32,21 @@ const getTestsByTeacher = async (search: string) => {
 	const sanitizedTests = sanitizeTeachersTests(tests)
 
 	return sanitizedTests
+}
+
+
+const getInsertInfo = async () => {
+	const categories = await categoryRepository.findAll()
+	const disciplineAndTeachers = await disciplineRepository
+		.findDisciplinesAndTeachers()
+	
+	const sanitizedDt = sanitizeDisciplinesTeachers(disciplineAndTeachers)
+	const insertTestInfo = {
+		categories,
+		disciplineAndTeachers: sanitizedDt
+	}
+
+	return insertTestInfo
 }
 
 
@@ -72,6 +88,7 @@ const validateTest = async (testId: number) => {
 export {
 	getTestsByDiscipline,
 	getTestsByTeacher,
+	getInsertInfo,
 	insertTest,
 	addTestsViw,
 }

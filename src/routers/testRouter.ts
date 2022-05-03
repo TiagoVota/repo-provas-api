@@ -26,6 +26,11 @@ testRouter.get(
 	schemaValidation.queryMiddleware(searchSchema),
 	testController.getTeacherTests,
 )
+testRouter.get(
+	'/insert-info',
+	authMiddleware,
+	testController.getTestInsertInfo,
+)
 
 testRouter.post(
 	'/',
