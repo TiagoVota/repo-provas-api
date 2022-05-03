@@ -14,34 +14,31 @@ import {
 
 const testRouter = Router()
 
+testRouter.use(authMiddleware)
+
 testRouter.get(
 	'/discipline',
-	authMiddleware,
 	schemaValidation.queryMiddleware(searchSchema),
 	testController.getDisciplineTests,
 )
 testRouter.get(
 	'/teacher',
-	authMiddleware,
 	schemaValidation.queryMiddleware(searchSchema),
 	testController.getTeacherTests,
 )
 testRouter.get(
 	'/insert-info',
-	authMiddleware,
 	testController.getTestInsertInfo,
 )
 
 testRouter.post(
 	'/',
-	authMiddleware,
 	schemaValidation.bodyMiddleware(addTesteSchema),
 	testController.postTest,
 )
 
 testRouter.patch(
 	'/:testId/views/add',
-	authMiddleware,
 	schemaValidation.paramsMiddleware(addViewSchema),
 	testController.AddView
 )

@@ -18,7 +18,7 @@ const findDisciplinesAndTeachers = async () => {
 			teacherDisciplines: {
 				some: {
 					id: {
-						gt: 1,
+						gt: 0,
 					},
 				},
 			},
