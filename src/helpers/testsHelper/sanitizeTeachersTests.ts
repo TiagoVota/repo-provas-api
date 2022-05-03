@@ -46,6 +46,7 @@ const separeCategories = (tests: any[]) => {
 			testId: test.id,
 			name: test.name,
 			pdfUrl: test.pdfUrl,
+			views: test.views,
 			discipline: test.discipline,
 		}
 

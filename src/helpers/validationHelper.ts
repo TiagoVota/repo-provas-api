@@ -1,14 +1,12 @@
 import { stripHtml } from 'string-strip-html'
 
 
-const sanitizeInput = (body: object) => {
-	const bodyAttributes = Object.keys(body)
+const sanitizeInput = (obj: object) => {
+	for (const key in obj) {
+		if (isSanitizableValue(obj[key])) obj[key] = sanitizeStr(obj[key])
+	}
 
-	bodyAttributes.forEach((key) => {
-		if (isSanitizableValue(body[key])) body[key] = sanitizeStr(body[key])
-	})
-
-	return body
+	return obj
 }
 
 const sanitizeStr = (str: string) => stripHtml(str).result.trim()

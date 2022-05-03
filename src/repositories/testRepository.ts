@@ -1,6 +1,17 @@
 import prisma from '../database/database.js'
 
 
+const findById = async (testId: number) => {
+	const test = await prisma.test.findUnique({
+		where: {
+			id: testId,
+		}
+	})
+
+	return test
+}
+
+
 const findByTerms = async (search: string) => {
 	const testsByTerms = await prisma.term.findMany({
 		include: {
@@ -61,7 +72,26 @@ const findByTeachers = async (search: string) => {
 }
 
 
+const addViewById = async (testId: number) => {
+	const testsByTeachers = await prisma.test.update({
+		where: {
+			id: testId
+		},
+		data: {
+			views: {
+				increment: 1,
+			},
+		},
+
+	})
+
+	return testsByTeachers
+}
+
+
 export {
 	findByTerms,
 	findByTeachers,
+	addViewById,
+	findById,
 }
