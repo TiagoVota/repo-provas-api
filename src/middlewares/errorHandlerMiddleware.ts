@@ -8,6 +8,8 @@ const errorHandlerMiddleware = (err, req: Request, res: Response, next: NextFunc
 
 	if (isPersonalizedError(errorName)) return res.status(status).send(message)
 	
+	if (err.name === 'JsonWebTokenError') return res.status(401).send('Unauthorized!')
+	
 	next(err)
 }
 

@@ -5,7 +5,11 @@ import { userRepository } from '../repositories/index.js'
 import { encryptValue, isValidEncrypt } from '../utils/encryptor.js'
 import { generateToken } from '../utils/authorizations.js'
 
-import { ExistentUserError, InvalidPasswordError } from '../errors/index.js'
+import {
+	ExistentUserError,
+	InvalidPasswordError,
+	NoUserError,
+} from '../errors/index.js'
 
 
 export type UserData = Omit<User, 'id'>
@@ -28,6 +32,7 @@ const createUser = async ({ email, password }: UserData) => {
 const AuthorizeUser = async ({ email, password }: UserData) => {
 	const user = await userRepository.findByEmail(email)
 
+	validateUser(user, email)
 	validatePassword(password, user.password)
 
 	const token = generateToken({ userId: user.id, email })
@@ -46,6 +51,11 @@ const insertUser = async (userData: UserData) => {
 	delete user.password
 
 	return user
+}
+
+const validateUser = (user: User, email: string) => {
+	const haveUser = Boolean(user?.id)
+	if (!haveUser) throw new NoUserError(email)
 }
 
 const validatePassword = (password: string, hashPassword: string) => {
