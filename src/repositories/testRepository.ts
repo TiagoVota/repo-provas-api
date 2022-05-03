@@ -1,5 +1,7 @@
 import prisma from '../database/database.js'
 
+import { TestInsertData } from '../interfaces/tests.js'
+
 
 const findById = async (testId: number) => {
 	const test = await prisma.test.findUnique({
@@ -71,6 +73,14 @@ const findByTeachers = async (search: string) => {
 	return testsByTeachers
 }
 
+const insert = async (testData: TestInsertData) => {
+	const test = await prisma.test.create({
+		data: testData,
+	})
+
+	return test
+}
+
 
 const addViewById = async (testId: number) => {
 	const testsByTeachers = await prisma.test.update({
@@ -90,8 +100,9 @@ const addViewById = async (testId: number) => {
 
 
 export {
+	findById,
 	findByTerms,
 	findByTeachers,
+	insert,
 	addViewById,
-	findById,
 }

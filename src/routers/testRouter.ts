@@ -5,7 +5,11 @@ import authMiddleware from '../middlewares/authMiddleware.js'
 
 import { testController } from '../controllers/index.js'
 
-import { addViewSchema, searchSchema } from '../schemas/testSchema.js'
+import {
+	addTesteSchema,
+	addViewSchema,
+	searchSchema
+} from '../schemas/testSchema.js'
 
 
 const testRouter = Router()
@@ -21,6 +25,13 @@ testRouter.get(
 	authMiddleware,
 	schemaValidation.queryMiddleware(searchSchema),
 	testController.getTeacherTests,
+)
+
+testRouter.post(
+	'/',
+	authMiddleware,
+	schemaValidation.bodyMiddleware(addTesteSchema),
+	testController.postTest,
 )
 
 testRouter.patch(
