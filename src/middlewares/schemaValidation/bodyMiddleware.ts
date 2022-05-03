@@ -1,12 +1,12 @@
 import { Request, Response, NextFunction } from 'express'
 
-import { validationErrors } from '../validations/handleValidation.js'
-import { sanitizeInput } from '../helpers/validationHelper.js'
+import { validationErrors } from '../../validations/handleValidation.js'
+import { sanitizeInput } from '../../helpers/validationHelper.js'
 
-import { SchemaError } from '../errors/index.js'
+import { SchemaError } from '../../errors/index.js'
 
 
-function schemaValidation(schema) {
+function bodyMiddleware(schema: object) {
 	return (req: Request, res: Response, next: NextFunction) => {
 		const body = sanitizeInput(req.body)
 
@@ -22,6 +22,4 @@ function schemaValidation(schema) {
 }
 
 
-export {
-	schemaValidation,
-}
+export default bodyMiddleware

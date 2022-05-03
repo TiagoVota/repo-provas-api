@@ -39,7 +39,26 @@ const getTeacherTests = async (
 }
 
 
+const AddView = async (
+	req: Request,
+	res: Response,
+	next: NextFunction
+) => {
+	const testId = Number(req.params.testId)
+
+	try {
+		const tests = await testService.addTestsViw(testId)
+
+		return res.status(200).send(tests)
+
+	} catch (error) {
+		next(error)
+	}
+}
+
+
 export {
 	getDisciplineTests,
 	getTeacherTests,
+	AddView,
 }

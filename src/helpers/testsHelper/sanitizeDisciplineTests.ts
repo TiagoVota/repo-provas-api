@@ -26,6 +26,7 @@ const separeCategories = (tests: any[], teacher: object) => {
 			testId: test.id,
 			name: test.name,
 			pdfUrl: test.pdfUrl,
+			views: test.views,
 		}
 
 		if (!hashTable[categoryId]) {

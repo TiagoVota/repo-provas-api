@@ -1,8 +1,8 @@
 import { Router } from 'express'
 
-import { authController } from '../controllers/index.js'
+import * as schemaValidation from '../middlewares/schemaValidation/index.js'
 
-import { schemaValidation } from '../middlewares/schemaValidationMiddleware.js'
+import { authController } from '../controllers/index.js'
 
 import { userSchema } from '../schemas/userSchema.js'
 
@@ -11,12 +11,12 @@ const authRouter = Router()
 
 authRouter.post(
 	'/login',
-	schemaValidation(userSchema),
+	schemaValidation.bodyMiddleware(userSchema),
 	authController.loginUser
 )
 authRouter.post(
 	'/sign-up',
-	schemaValidation(userSchema),
+	schemaValidation.bodyMiddleware(userSchema),
 	authController.signUpUser
 )
 
