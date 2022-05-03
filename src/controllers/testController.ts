@@ -1,5 +1,7 @@
 import { NextFunction, Request, Response } from 'express'
 
+import { TestInsertData } from '../interfaces/tests.js'
+
 import { testService } from '../services/index.js'
 
 
@@ -39,6 +41,40 @@ const getTeacherTests = async (
 }
 
 
+const getTestInsertInfo = async (
+	req: Request,
+	res: Response,
+	next: NextFunction
+) => {
+	try {
+		const testInsertInfo = await testService.getInsertInfo()
+
+		return res.status(200).send(testInsertInfo)
+
+	} catch (error) {
+		next(error)
+	}
+}
+
+
+const postTest = async (
+	req: Request,
+	res: Response,
+	next: NextFunction
+) => {
+	const testInfo = req.body as TestInsertData
+
+	try {
+		const test = await testService.insertTest(testInfo)
+
+		return res.status(201).send(test)
+
+	} catch (error) {
+		next(error)
+	}
+}
+
+
 const AddView = async (
 	req: Request,
 	res: Response,
@@ -47,9 +83,9 @@ const AddView = async (
 	const testId = Number(req.params.testId)
 
 	try {
-		const tests = await testService.addTestsViw(testId)
+		const test = await testService.addTestsViw(testId)
 
-		return res.status(200).send(tests)
+		return res.status(200).send(test)
 
 	} catch (error) {
 		next(error)
@@ -60,5 +96,7 @@ const AddView = async (
 export {
 	getDisciplineTests,
 	getTeacherTests,
+	getTestInsertInfo,
+	postTest,
 	AddView,
 }

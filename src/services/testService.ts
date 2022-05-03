@@ -1,9 +1,20 @@
-import { testRepository } from '../repositories/index.js'
+import { TestInsertData } from '../interfaces/tests.js'
+
+import {
+	categoryRepository,
+	disciplineRepository,
+	testRepository
+} from '../repositories/index.js'
 
 import sanitizeDisciplineTests from '../helpers/testsHelper/sanitizeDisciplineTests.js'
 import sanitizeTeachersTests from '../helpers/testsHelper/sanitizeTeachersTests.js'
+import sanitizeDisciplinesTeachers from '../helpers/testsHelper/sanitizeDisciplinesTeachers.js'
 
-import { NoTestError } from '../errors/index.js'
+import {
+	NoCategoryError,
+	NoTeacherDisciplineError,
+	NoTestError
+} from '../errors/index.js'
 
 
 const getTestsByDiscipline = async (search: string) => {
@@ -24,6 +35,31 @@ const getTestsByTeacher = async (search: string) => {
 }
 
 
+const getInsertInfo = async () => {
+	const categories = await categoryRepository.findAll()
+	const disciplineAndTeachers = await disciplineRepository
+		.findDisciplinesAndTeachers()
+	
+	const sanitizedDt = sanitizeDisciplinesTeachers(disciplineAndTeachers)
+	const insertTestInfo = {
+		categories,
+		disciplineAndTeachers: sanitizedDt
+	}
+
+	return insertTestInfo
+}
+
+
+const insertTest = async (testInfo: TestInsertData) => {
+	await validateCategory(testInfo.categoryId)
+	await validateTeacherDisciplineId(testInfo.teacherDisciplineId)
+
+	const insertedTest = await testRepository.insert(testInfo)
+
+	return insertedTest
+}
+
+
 const addTestsViw = async (testId: number) => {
 	await validateTest(testId)
 
@@ -32,6 +68,16 @@ const addTestsViw = async (testId: number) => {
 	return updatedTest
 }
 
+const validateCategory = async (categoryId: number) => {
+	const category = await categoryRepository.findById(categoryId)
+	if (!category) throw new NoCategoryError(categoryId)
+}
+
+const validateTeacherDisciplineId = async (tdId: number) => {
+	const teacherDiscipline = await disciplineRepository
+		.findTeacherDisciplineById(tdId)
+	if (!teacherDiscipline) throw new NoTeacherDisciplineError(tdId)
+}
 
 const validateTest = async (testId: number) => {
 	const test = await testRepository.findById(testId)
@@ -42,5 +88,7 @@ const validateTest = async (testId: number) => {
 export {
 	getTestsByDiscipline,
 	getTestsByTeacher,
+	getInsertInfo,
+	insertTest,
 	addTestsViw,
 }
